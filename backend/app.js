@@ -5,9 +5,13 @@
 
 //1. Importar las dependencias necesarias
 import express from "express"
+import dotenv from "dotenv";
 
 //2. configurar las dependencias que necesitamos
 const app = express();
+dotenv.config();
+
+
 const port = 3000;
 
 //3. funcionalidades que necesite agregar
