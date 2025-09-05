@@ -1,5 +1,5 @@
 // 1. importamos
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 
 
 //2. construir la plantilla del modelo
@@ -7,7 +7,7 @@ import mongoose, { Types } from "mongoose";
 const userSchema = new mongoose.Schema({
 
     name:{
-        Type: String,
+        type: String,
         required : true
     },
     username:{
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        required: true
     },
     role:{
         type: String,

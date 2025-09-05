@@ -7,6 +7,8 @@
 import express from "express"
 import dotenv from "dotenv";
 import { conexionMongo } from "./src/config/db.js";
+import {userRouter} from './src/routes/users.routes.js';
+import {productRouter} from './src/routes/products.routes.js';
 
 //2. configurar las dependencias y modulos que necesitamos
 const app = express();
@@ -19,6 +21,11 @@ app.get("/",(req,res)=>{
 res.send("El servidor funciona!")
 });
 
+
+
+app.use(express.json());
+app.use('/users', userRouter);
+app.use('/products', productRouter);
 
 //4. levantar el servicio
 app.listen(port, ()=>{
