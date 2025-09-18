@@ -7,7 +7,21 @@ import { productModel } from "../models/products.model.js";
 //1. Metodo para Crear un producto -> POST
 export const postProduct = async (req, res) => {
     try {
-        await productModel.create(req.body);
+
+        if (!req.file) {
+            return res.status(400).json({
+                "mensaje": "Debe subir un archivo de imagen"
+            });
+        }
+
+        //organizar primero el producto que se va a crear
+        const newProduct = {
+            ...req.body,
+            imagen: `/uploads/${req.file.filename}`
+        }
+
+        await productModel.create(newProduct);
+
         return res.status(201).json({
             "mensaje": "Producto creado correctamente!"
         });
@@ -36,10 +50,10 @@ export const getAllProducts = async (req, res) => {
 };
 
 export const putProductById = async (req, res) => {
-      try {
+    try {
         const idForUpdate = req.params.id;
         const dataForUpdate = req.body;
-        await productModel.findByIdAndUpdate(idForUpdate,dataForUpdate);
+        await productModel.findByIdAndUpdate(idForUpdate, dataForUpdate);
         return res.status(200).json({
             "mensaje": "Producto actualizado correctamente!"
         });
@@ -52,8 +66,8 @@ export const putProductById = async (req, res) => {
     }
 }
 
-export const deleteProductById = async(req, res) => {
-      try {
+export const deleteProductById = async (req, res) => {
+    try {
         const idForDelet = req.params.id;
         await productModel.findByIdAndDelete(idForDelet);
         return res.status(200).json({

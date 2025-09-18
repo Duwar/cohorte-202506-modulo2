@@ -7,7 +7,6 @@ import bcryptjs from "bcryptjs";
 //1. Metodo para Crear un producto -> POST
 export const postUser = async (req, res) => {
     try {
-
         // deestructurar cuando se hace - procesar la informaicón del usuario antes de guardarla
         const {name, username, email, age, password, role} = req.body;
         // .hash -> encripta la contraseña
@@ -20,6 +19,7 @@ export const postUser = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("Ocurrió un error en el controlador:", error);
         return res.status(400).json({
             "mensaje": "Ocurrio un error al crear el usuario!",
             "error": error.message || error
@@ -27,9 +27,13 @@ export const postUser = async (req, res) => {
     }
 };
 
-export const getAllUsers = (req, res) => {
+export const getAllUsers = async (req, res) => {
     try {
-
+        const allUsers = await userModel.find();
+        return res.status(200).json({
+            "mensaje": "Se encontraron todos los usuarios!",
+            "data": allUsers
+        });
     } catch (error) {
         return res.status(400).json({
             "mensaje": "Ocurrio un error al mostrar los usuarios!",
