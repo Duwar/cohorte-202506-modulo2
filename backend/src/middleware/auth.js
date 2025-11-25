@@ -14,13 +14,13 @@ export const auth = (reqRole)=>{
         }
 
         //2. Verificar que el token sea permitido (JWT)
-
         const allowedToken = token.split(" ")[1];
         console.log("Token después de separarlo del Bearer: " + allowedToken)
 
         try {
             const decoded = await verifyToken(allowedToken);
             console.log("información decodificación del token " , decoded);
+         
          //3. Verificar especificamente si el rol es adminsitardor
          if(reqRole === "admin" && decoded.admin === false){
             return response.status(401).json({
@@ -31,9 +31,10 @@ export const auth = (reqRole)=>{
             return response.status(401).json({
                 "mensaje" : "Fallo la autenticación: Token no permitido"
             })
-            
         }
+        
 //Indica que debe continuar con el siguiente proceso
+
         next();
     }
 

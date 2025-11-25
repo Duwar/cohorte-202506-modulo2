@@ -42,9 +42,14 @@ export const getAllUsers = async (req, res) => {
     }
 };
 
-export const putUserById = (req, res) => {
+export const putUserById = async (req, res) => {
     try {
-
+        const idForUpdate = req.params.id;
+        const dataForUpdate = req.body;
+        await userModel.findByIdAndUpdate(idForUpdate, dataForUpdate);
+        return res.status(200).json({
+            "mensaje": "Usuario actualizado correctamente!"
+        });
     } catch (error) {
         return res.status(400).json({
             "mensaje": "Ocurrio un error al actualizar el usuario!",
@@ -53,9 +58,13 @@ export const putUserById = (req, res) => {
     }
 }
 
-export const deleteUserById = (req, res) => {
+export const deleteUserById = async (req, res) => {
     try {
-
+        const idForDelet = req.params.id;
+        await userModel.findByIdAndDelete(idForDelet);
+        return res.status(200).json({
+            "mensaje": "Usuario eliminado correctamente!"
+        });
     } catch (error) {
         return res.status(400).json({
             "mensaje": "Ocurrio un error al eliminar el usuario!",

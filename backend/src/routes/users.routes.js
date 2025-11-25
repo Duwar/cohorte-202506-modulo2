@@ -9,6 +9,6 @@ userRouter.get('/mostrar' , getAllUsers);
 
 userRouter.post('/crear', postUser);
 
-userRouter.put('/actualizar/:id', putUserById);
+userRouter.put('/actualizar/:id',auth("admin"), putUserById);
 
-userRouter.delete('/eliminar/:id', deleteUserById);
+userRouter.delete('/eliminar/:id', auth("admin"),deleteUserById);
